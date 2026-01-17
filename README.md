@@ -50,3 +50,7 @@ npm install
 npm run dev
 
 http://localhost:5173
+
+## 🚀 Live Demo
+
+👉 https://bacgroundcolorchnager.vercel.app/
