@@ -1,28 +1,48 @@
-import React,{ useState } from "react"
-function App() {
-  const [colr,setColor]=useState("blue")
+import { useEffect, useState, useRef } from "react";
+import ColorPanel from "./ColorPanel";
+import HistoryPanel from "./HistoryPanel";
+import "./App.css";
+
+export default function App() {
+  const [color, setColor] = useState({ r: 0, g: 0, b: 0 });
+  const [history, setHistory] = useState([]);
+
+  const debounceRef = useRef(null);
+
+  const updateColor = (newColor, addToHistory = false) => {
+    setColor(newColor);
+
+    if (addToHistory) {
+      addHistory(newColor);
+    }
+  };
+
+  const addHistory = (c) => {
+    const rgb = `rgb(${c.r}, ${c.g}, ${c.b})`;
+
+    setHistory((prev) => {
+      if (prev[0] === rgb) return prev;
+      return [rgb, ...prev];
+    });
+  };
+
+  // debounce slider updates
+  useEffect(() => {
+    clearTimeout(debounceRef.current);
+
+    debounceRef.current = setTimeout(() => {
+      addHistory(color);
+    }, 1000);
+
+    return () => clearTimeout(debounceRef.current);
+  }, [color]);
+
+  const bgColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+
   return (
-   <div className="w-full h-screen duration-2" style={{backgroundColor:colr}}>
-      <div className="fixed flex flex-wrap justify-center bottom-12 inset-x-0 px-2">
-        <div className="flex flex-wrap justify-center gap-3 shadow-lg bg-white px-3 py-2 rounded-3xl">
-             <butoon className="outline-none px-4 py-2 rounded -full shadow-lg" style={{backgroundColor:"pink"}} onClick={()=>setColor("red")}>
-              Red
-             </butoon>
-
-        </div>
-        <div className="flex flex-wrap justify-center gap-3 shadow-lg bg-white px-3 py-2 rounded-3xl">
-             <butoon className="outline-none px-4 py-2 rounded -full shadow-lg" style={{backgroundColor:"green"}} onClick={()=>setColor("green")}>
-              Green
-             </butoon>
-        </div>
-        <div className="flex flex-wrap justify-center gap-3 shadow-lg bg-white px-3 py-2 rounded-3xl">
-             <butoon className="outline-none px-4 py-2 rounded -full shadow-lg" style={{backgroundColor:"blue"}} onClick={()=>setColor("blue")}>
-              Blue
-             </butoon>
-        </div>
-      </div>
-   </div>
-  )
+    <div className="container" style={{ backgroundColor: bgColor }}>
+      <ColorPanel color={color} updateColor={updateColor} />
+      <HistoryPanel history={history} updateColor={updateColor} />
+    </div>
+  );
 }
-
-export default App
