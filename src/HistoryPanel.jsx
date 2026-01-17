@@ -4,15 +4,14 @@ function HistoryPanel({ history, updateColor }) {
       <h3>🎨 Last 10 Colors</h3>
 
       <div className="history-grid">
-        {history.map((c, i) => (
+        {history.map((color, i) => (
           <div
             key={i}
             className="history-color"
-            style={{ backgroundColor: c }}
-            title={c}
+            style={{ backgroundColor: color }}
             onClick={() => {
-              const [r, g, b] = c.match(/\d+/g).map(Number);
-              updateColor({ r, g, b }, true);
+              const [r, g, b] = color.match(/\d+/g).map(Number);
+              updateColor({ r, g, b });
             }}
           />
         ))}

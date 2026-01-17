@@ -1,43 +1,24 @@
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import ColorPanel from "./ColorPanel";
 import HistoryPanel from "./HistoryPanel";
 import "./App.css";
 
-export default function App() {
-  const [color, setColor] = useState({ r: 0, g: 0, b: 0 });
+function App() {
+  const [color, setColor] = useState({ r: 142, g: 142, b: 255 });
   const [history, setHistory] = useState([]);
 
-  const debounceRef = useRef(null);
+  const bgColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
 
-  const updateColor = (newColor, addToHistory = false) => {
+  const updateColor = (newColor, save = false) => {
     setColor(newColor);
 
-    if (addToHistory) {
-      addHistory(newColor);
+    if (save) {
+      const str = `rgb(${newColor.r}, ${newColor.g}, ${newColor.b})`;
+      setHistory((prev) =>
+        prev[0] === str ? prev : [str, ...prev].slice(0, 10)
+      );
     }
   };
-
-  const addHistory = (c) => {
-    const rgb = `rgb(${c.r}, ${c.g}, ${c.b})`;
-
-    setHistory((prev) => {
-      if (prev[0] === rgb) return prev;
-      return [rgb, ...prev];
-    });
-  };
-
-  // debounce slider updates
-  useEffect(() => {
-    clearTimeout(debounceRef.current);
-
-    debounceRef.current = setTimeout(() => {
-      addHistory(color);
-    }, 1000);
-
-    return () => clearTimeout(debounceRef.current);
-  }, [color]);
-
-  const bgColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
 
   return (
     <div className="container" style={{ backgroundColor: bgColor }}>
@@ -46,3 +27,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
