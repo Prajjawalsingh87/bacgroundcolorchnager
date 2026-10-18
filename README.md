@@ -6,12 +6,13 @@ A modern RGB color playground built using **React** and **Vite** that allows use
 
 ## 🚀 Features
 
-- 🎚 RGB sliders for precise color control  
-- 🔴🟢🔵 Preset buttons (Red, Green, Blue, Random)  
-- 🧠 Debounced color history (last 10 selections)  
-- 🧾 Displays RGB and HEX values  
-- 🖱 Clickable history to restore previous colors  
-- 📌 Fixed top control panel for visibility  
+- 🎚 RGB sliders with live gradient tracks for precise color control  
+- 🎨 Curated 12-color palette plus Random  
+- ⌨️ Editable HEX input (`#RGB` or `#RRGGBB`)  
+- 📋 One-click copy of HEX / RGB values with feedback  
+- 🧠 Debounced color history (last 10, saved in localStorage, clearable)  
+- ♿ Text automatically switches between dark and white for readable contrast (ratio shown)  
+- 📱 Responsive layout for phones and desktops  
 - ⚡ Powered by Vite (fast HMR)
 
 ---
@@ -32,6 +33,7 @@ src/
 ├── App.jsx
 ├── ColorPanel.jsx
 ├── HistoryPanel.jsx
+├── colorUtils.js
 ├── App.css
 ├── index.css
 └── main.jsx
