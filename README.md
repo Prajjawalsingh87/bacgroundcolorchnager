@@ -1,4 +1,6 @@
-# 🎨 Background Color Changer (React + Vite)
+# 🎨 Color Playground (React + Vite)
+
+**🔗 Live:** https://bacgroundcolorchnager.vercel.app
 
 A modern RGB color playground built using **React** and **Vite** that allows users to dynamically change the background color using sliders, presets, and random generation — with color history tracking.
 
@@ -29,6 +31,7 @@ A modern RGB color playground built using **React** and **Vite** that allows use
 ## 📂 Project Structure
 
 
+```
 src/
 ├── App.jsx
 ├── ColorPanel.jsx
@@ -37,18 +40,20 @@ src/
 ├── App.css
 ├── index.css
 └── main.jsx
+```
 
 
 ---
 
 ## ▶️ Getting Started
 
-### Install dependencies
-
 ```bash
+git clone https://github.com/Prajjawalsingh87/bacgroundcolorchnager.git
+cd bacgroundcolorchnager
 npm install
+npm run dev        # http://localhost:5173
+```
 
+## 🚀 Deployment
 
-npm run dev
-
-http://localhost:5173
+Deployed on **Vercel**; every push to `main` deploys to production.
