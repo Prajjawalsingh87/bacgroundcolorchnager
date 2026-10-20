@@ -79,7 +79,7 @@ export default function App() {
   return (
     <div
       className="bg-transition min-h-screen px-4 py-8 sm:px-8 lg:py-12"
-      style={{ backgroundColor: "#f6f7fb", color: "#172033" }}
+      style={{ backgroundColor: "var(--studio-bg)", color: "var(--studio-ink)" }}
     >
       <div className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[1fr_400px] lg:gap-10">
         <header style={{ backgroundColor: toRgbString(color), color: text.color }} className="flex flex-col justify-between gap-8 rounded-3xl p-8 lg:min-h-[calc(100vh-6rem)]">
