@@ -29,6 +29,8 @@ A modern RGB color playground built using **React** and **Vite** that allows use
 - Vite  
 - JavaScript (ES6+)  
 - CSS  
+- Tailwind CSS  
+- vite-plugin-pwa (Workbox)  
 
 ---
 
