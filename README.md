@@ -13,6 +13,8 @@ A modern RGB color playground built using **React** and **Vite** that allows use
 - ⌨️ Editable HEX input (`#RGB` or `#RRGGBB`)  
 - 📋 One-click copy of HEX / RGB values with feedback  
 - 🧠 Debounced color history (last 10, saved in localStorage, clearable)  
+- 🌈 Palettes from the current color: complementary, analogous, triadic, shades and tints (click to apply, copy a row)  
+- 🔍 Contrast checker for any two colors with WCAG AA/AAA pass/fail for normal and large text (swap, live preview)  
 - ♿ Text automatically switches between dark and white for readable contrast (ratio shown)  
 - 📱 Responsive layout for phones and desktops  
 - ⚡ Powered by Vite (fast HMR)
@@ -36,6 +38,8 @@ src/
 ├── App.jsx
 ├── ColorPanel.jsx
 ├── HistoryPanel.jsx
+├── HarmonyPanel.jsx
+├── ContrastChecker.jsx
 ├── colorUtils.js
 ├── App.css
 ├── index.css

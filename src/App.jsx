@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import ColorPanel from "./ColorPanel";
 import HistoryPanel from "./HistoryPanel";
+import HarmonyPanel from "./HarmonyPanel";
+import ContrastChecker from "./ContrastChecker";
 import { readableTextColor, toHex, toRgbString, parseHex } from "./colorUtils";
 import "./App.css";
 
@@ -104,6 +106,8 @@ export default function App() {
             </div>
             <p className="studio-note" role="status">{message || "Share your exact color or use it in a stylesheet."}</p>
           </section>
+          <HarmonyPanel color={color} updateColor={updateColor} />
+          <ContrastChecker color={color} />
           <HistoryPanel history={history} updateColor={updateColor} clearHistory={() => setHistory([])} />
         </main>
       </div>
