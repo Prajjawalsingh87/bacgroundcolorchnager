@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { parseHex, randomColor, toHex, toRgbString } from "./colorUtils";
 
@@ -163,3 +164,6 @@ function ColorPanel({ color, updateColor }) {
 }
 
 export default ColorPanel;
+
+CopyButton.propTypes = { value: PropTypes.string.isRequired, label: PropTypes.string.isRequired };
+ColorPanel.propTypes = { color: PropTypes.shape({ r: PropTypes.number.isRequired, g: PropTypes.number.isRequired, b: PropTypes.number.isRequired }).isRequired, updateColor: PropTypes.func.isRequired };

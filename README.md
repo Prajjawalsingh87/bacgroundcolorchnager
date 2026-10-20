@@ -57,3 +57,29 @@ npm run dev        # http://localhost:5173
 ## 🚀 Deployment
 
 Deployed on **Vercel**; every push to `main` deploys to production.
+
+
+## October 2026 improvements
+
+Share the selected color through a `?color=` URL and copy a CSS custom property. The preview keeps its selected color while controls use the shared light design. Invalid saved history is ignored.
+
+
+## Terminal verification and deployment
+
+```bash
+npm ci
+npm run lint
+npm run build
+npm run dev
+```
+
+Node.js 24 is used on Vercel. The production build is written to `dist/`.
+
+```bash
+vercel link --project bacgroundcolorchnager
+vercel deploy          # preview
+vercel deploy --prod   # publish production
+```
+
+The local `.vercel/` link is ignored by Git. Deployment credentials belong in
+the CLI's login session, never in this repository.
