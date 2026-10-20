@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import ColorPanel from "./ColorPanel";
 import HistoryPanel from "./HistoryPanel";
-import { readableTextColor, toHex, toRgbString } from "./colorUtils";
+import { readableTextColor, toHex, toRgbString, parseHex } from "./colorUtils";
 import "./App.css";
 
 const HISTORY_LIMIT = 10;
@@ -11,15 +11,20 @@ const INITIAL_COLOR = { r: 99, g: 102, b: 241 };
 const loadHistory = () => {
   try {
     const saved = JSON.parse(localStorage.getItem(HISTORY_KEY));
-    return Array.isArray(saved) ? saved.slice(0, HISTORY_LIMIT) : [];
+    return Array.isArray(saved) ? saved.filter(v => typeof v === "string" && parseHex(v)).slice(0, HISTORY_LIMIT) : [];
   } catch {
     return [];
   }
 };
 
 export default function App() {
-  const [color, setColor] = useState(INITIAL_COLOR);
+  const [color, setColor] = useState(() => parseHex(new URLSearchParams(location.search).get("color") || "") || INITIAL_COLOR);
   const [history, setHistory] = useState(loadHistory);
+  const [message, setMessage] = useState("");
+  const copyValue = async (value) => {
+    try { await navigator.clipboard.writeText(value); setMessage("Copied to clipboard."); }
+    catch { setMessage("Clipboard blocked. Copy this value: " + value); }
+  };
 
   const debounceRef = useRef(null);
   // Last color written to history (starts as the initial color so it isn't recorded).
@@ -55,7 +60,7 @@ export default function App() {
   }, [color, addHistory]);
 
   useEffect(() => {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch { /* In-memory history still works. */ }
   }, [history]);
 
   const hex = toHex(color);
@@ -72,10 +77,10 @@ export default function App() {
   return (
     <div
       className="bg-transition min-h-screen px-4 py-8 sm:px-8 lg:py-12"
-      style={{ backgroundColor: toRgbString(color), color: text.color }}
+      style={{ backgroundColor: "#f6f7fb", color: "#172033" }}
     >
       <div className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[1fr_400px] lg:gap-10">
-        <header className="flex flex-col justify-between gap-8 lg:min-h-[calc(100vh-6rem)] lg:py-4">
+        <header style={{ backgroundColor: toRgbString(color), color: text.color }} className="flex flex-col justify-between gap-8 rounded-3xl p-8 lg:min-h-[calc(100vh-6rem)]">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] opacity-80">Color Playground</p>
 
           <div>
@@ -91,6 +96,14 @@ export default function App() {
 
         <main className="flex min-w-0 flex-col gap-4">
           <ColorPanel color={color} updateColor={updateColor} />
+          <section className="rounded-2xl bg-white p-5 text-slate-900 shadow-panel">
+            <h2 className="font-semibold">Take this color with you</h2>
+            <div className="studio-toolbar">
+              <button className="studio-button" onClick={() => { const url = new URL(location.href); url.searchParams.set("color", hex); copyValue(url.href); }}>Copy share link</button>
+              <button className="studio-button" onClick={() => copyValue(`--color-accent: ${hex};`)}>Copy CSS variable</button>
+            </div>
+            <p className="studio-note" role="status">{message || "Share your exact color or use it in a stylesheet."}</p>
+          </section>
           <HistoryPanel history={history} updateColor={updateColor} clearHistory={() => setHistory([])} />
         </main>
       </div>

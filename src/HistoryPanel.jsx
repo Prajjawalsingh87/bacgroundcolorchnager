@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { parseHex } from "./colorUtils";
 
 function HistoryPanel({ history, updateColor, clearHistory }) {
@@ -45,3 +46,5 @@ function HistoryPanel({ history, updateColor, clearHistory }) {
 }
 
 export default HistoryPanel;
+
+HistoryPanel.propTypes = { history: PropTypes.arrayOf(PropTypes.string).isRequired, updateColor: PropTypes.func.isRequired, clearHistory: PropTypes.func.isRequired };
